@@ -46,7 +46,7 @@ Representation theory interacts with:
 == Some Statements
 
 #theorem[Burnside][
-  If $G$ is a finite group and $|G| = p^a q^b$ for some primes $p, q$,
+  If $G$ is a finite group and $|G| = p q r$ for some pairwise different primes $p, q, r$,
   then $G$ is solvable.
 ]
 
@@ -219,6 +219,275 @@ for the $p-1$ values of $a$.
   $
   such that $u dot rho_1(g) = rho_2(g) dot u$ for all $g in G$.
 
+  The set of such operators is denoted by
+  $
+    "Hom"_G (rho_1, rho_2) = "Hom"_G (V_1, V_2).
+  $
 ]
+
+#remark[
+  We use the notation
+  $
+    "End"_G (rho) = "Hom"_G (rho, rho).
+  $
+]
+
+#remark[
+  1. we have $
+      "Hom"_G (V,W) subset "Hom"_k (V,W).
+    $
+
+  2. composition is well defined, i.e. we have a map
+    $
+      "Hom"_G (W, U) times "Hom"_G (V, W) -> "Hom"_G (V, U).
+    $
+
+  3. this composition is associative (as its the composition of linear maps).
+
+  4. we have the identity map $id_V in "End"_G (V)$.
+
+  I.e. representations of $G$ over $k$ form a sub category of the category
+  of $k$-vector spaces.
+]
+
+#definition[
+  A $G$-morphism with an inverse which is a $G$-morphism is called an
+  isomorphism.
+]
+
+#remark[
+  A $G$-morphism is an isomorphism iff it is a $k$-vector space isomorphism.
+]
+
+#example[
+  1. #[
+      $rho$ arbitary on $V$ and if $1_G$ denotes the trivial one-dim rep.
+      of $G$ on $k$ by $g v = v$, then
+      $
+        "Hom"_G (1_G, rho) = { v in V | rho(g) v = v " " forall g in G } =: V^G
+      $
+      where the bijection is given by evaluating the morphism at $1 in k$.
+    ]
+
+  2. #[
+      $rho$ arbitrary and $
+    chi: G -> "GL"(k) = k^times
+      $
+      a one-dimensional representation (often called a character).
+      $
+        "Hom"_G (chi, rho) isom { v in V | rho(g) v = chi(g) v " "
+          forall g in G }.
+      $
+      which are called the common eigenvectors of $chi$.
+
+      For instance the right-regular representation $rho_G$ on
+      $
+        V = {phi: G -> k}
+      $
+      (by right multiplcation of the argument).
+      Then we claim that
+      $
+        "Hom"_G (chi, rho_G) isom chi dot k
+      $
+      Indeed $chi in "Hom"_G(chi, rho_G)$ iff
+      $
+        forall g in G, forall x in G: (rho_G (g) phi)(x) = chi(g) phi(x) \
+        <=> forall g in G, forall x in G:
+        phi(x g) = chi(g) phi(x)
+      $
+      if this holds then for $x = e_G$ we get
+      $
+        phi(g) = chi(g) phi(e_G)
+      $
+      so in particular $phi in chi dot k$. The converse can be checked.
+    ]
+  3. #[
+      $rho$ representation of $G$ on $V$. Let
+      $
+        W = "End"_k (V)
+      $
+      Then $G$ acts on $W$ by conjugation:
+      $
+        g dot u = rho(g) dot u dot rho(g)^(-1).
+      $
+      This is a representation.
+
+      #remark[
+        A nice fact:
+        $
+          "Hom"_G (1_G, "End"_k (V))
+          isom { u: V -> V | forall g in G, g dot u = u} \
+          = {u: V -> V | forall g in G, rho(g) dot u = u dot rho(g)} = "End"_G (V).
+        $
+      ]
+    ]
+
+  4. #[
+      $G, rho_G, lambda_G$ the right, and left regular representations then
+      there exists and explicit isomorphism
+      $
+        rho_G -> lambda_G
+      $
+      Indeed define
+      $
+        u(phi)(x) = phi(x^(-1)).
+      $
+      #remark[
+        this is related to the fact that taking the inverse is an involution
+        "converting" (bruh idk the proper way to say this in breavity) left
+        and right haar measures.
+      ]
+    ]
+]
+
+== Subrepresentations, Irreducibility, Semi-simplicity
+
+#definition[
+  Let $k, G$ be fixed.
+
+  1. #[
+      A subrepresentation of
+      $
+        rho: G -> "GL"(V)
+      $
+      is a representation of the form
+      $
+        g |-> rho(g)|_W
+      $
+      for some $G$ invariant subspace $W$.
+    ]
+
+  2. #[
+      The direct sum
+      $
+        plus.circle.big_(i in I) rho_i
+      $
+      is the representation on
+      $
+        plus.circle.big_(i in I) V_i
+      $
+      defined by
+      $
+        plus.circle.big_(i in I) rho_i (g) ((v_i)_(i in I)) =
+        (rho_i (g) v_i)_(i in I).
+      $
+    ]
+
+  3. #[
+      Given $rho$ and a subrepresentation $rho'$ of $rho$ on $W$ there is
+      a representation $rho slash rho'$ on $V slash W$ defined by
+      $
+        (rho slash rho') (g) (v + W) = rho(g) v + W.
+      $
+    ]
+]
+
+#example[
+  If $V$ is finite dimensional the decoposition in the previous definition
+  corresponds to the block matrix
+  $
+    mat(rho(g), *; , rho slash rho'(g)) ,
+  $
+]
+
+
+#example[
+  $G = CC$, $k = CC$ and $V = CC^2$ and
+  $
+    rho(z) = mat(1, z; , 1).
+  $
+]
+
+
+#definition[
+  $k, G$ fixed.
+
+  1. #[
+      A repr. $rho$ of $G$ on $V != {0}$ is irreducizible if $V$ has no non-trivial
+      $G$-invariant subspaces.
+    ]
+
+  2. #[
+      $rho$ is called semisimple if and only if it is a
+      direct sum of irreducible representations.
+    ]
+
+  3. #[
+      $rho$ is called $pi$-isotypic for some irreducible representation $pi$
+      if it is semisiple with all summands isomorphic to $pi$
+      (e.g: $rho = pi plus.circle pi plus.circle pi$...).
+    ]
+]
+
+
+#example[
+  $G = CC, k = CC$ and $V=CC^2$ and
+
+  1. #[
+      $
+        rho(z) = mat(1, z; , 1)
+      $
+      is not semisimple. If it were it would have to be
+      - irreducible (no because $CC e_1$ is invariant / stable)
+      - or a direct sum of two one-dim subrepresentations, so there is a
+        basis which diagonalizes this matrix, but $rho(z)$ is not
+        diagonalizable for any $z != 0$.
+    ]
+
+  4. #[
+      $G = "SL"_n (CC), n >= 1$, $k = CC$ and
+      $
+        V = M_(n times n) (CC)
+      $
+      consider the adjoin representation
+      $
+        rho(g) (X) = g X g^(-1)
+      $
+      In this case $CC I_n$ is a stable subspace, and spans a
+      trivial subrepresentation of dimension $1$.
+      $
+        M_(n times n) (CC) = CC I_n times M_(n times n)^0 (CC)
+      $
+      where $M_(n times n)^0(CC)$ are the matrices with trace zero.
+    ]
+
+  5. #[
+      Warning. A representation of $G$ does not always contain an
+      irreducible subrepresentation.
+
+      In particular if $v$ is a non-zero vector in $V$, then the span
+      of
+      $
+        {rho(g) v | g in G}
+      $
+      is a subrepresentation, but not always
+      irreducible (e.g. see the action of $S_n$ on $k^n$).
+    ]
+]
+
+#theorem[Blaschhe][
+  For $k$ of char. zero e.g $k = CC$ or $RR$, $G$ finite, every repr. is
+  semisimple.
+]
+
+
+#theorem[Schur's Lemma][
+  $G, k$
+
+  1. #[
+      If $rho$ is a repr. $pi$ is an irred. repr then any
+      $u in "Hom"_G(phi, rho)$ is either $0$ or injective.
+      And any $u in "Hom"_G(rho, pi)$ then is either $0$ or surjective.
+    ]
+
+  2. #[
+      If $k$ is alg. closed and $pi$ is finite-dim then
+      $
+        "End"_G (pi) = k id_pi.
+      $
+    ]
+]
+
+
 
 #bibliography("bib.bib", full: true)
