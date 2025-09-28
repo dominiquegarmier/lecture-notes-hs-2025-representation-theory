@@ -403,7 +403,7 @@ for the $p-1$ values of $a$.
   $k, G$ fixed.
 
   1. #[
-      A repr. $rho$ of $G$ on $V != {0}$ is irreducizible if $V$ has no non-trivial
+      A repr. $rho$ of $G$ on $V != {0}$ is irreducible if $V$ has no non-trivial
       $G$-invariant subspaces.
     ]
 
@@ -465,7 +465,7 @@ for the $p-1$ values of $a$.
     ]
 ]
 
-#theorem[Blaschhe][
+#theorem[Maschke 1899][
   For $k$ of char. zero e.g $k = CC$ or $RR$, $G$ finite, every repr. is
   semisimple.
 ]
@@ -476,8 +476,8 @@ for the $p-1$ values of $a$.
 
   1. #[
       If $rho$ is a repr. $pi$ is an irred. repr then any
-      $u in "Hom"_G(phi, rho)$ is either $0$ or injective.
-      And any $u in "Hom"_G(rho, pi)$ then is either $0$ or surjective.
+      $u in "Hom"_G (pi, rho)$ is either $0$ or injective.
+      And any $u in "Hom"_G (rho, pi)$ then is either $0$ or surjective.
     ]
 
   2. #[
@@ -486,6 +486,262 @@ for the $p-1$ values of $a$.
         "End"_G (pi) = k id_pi.
       $
     ]
+]
+
+#proofidea[
+  For the first part we need to use the fact that $ker(u), im(u)$ are subrepresentations.
+
+  For the finite dimensional part we use that any endomorphism has an eigenvalue.
+]
+
+#remark[
+  When we talk about subreprsentations we sometimes abuse subspace notation. I.e. we identify
+  subrepresentation with invariant subspaces.
+
+  The reason why this makes sense, is that we can think of representations as vector spaces with extra structure.
+  As opposed to a group homomorphism into a general linear group.
+  Of course the two notions are equivalent.
+]
+
+
+#lemma[
+  $G, k$ fixed, A representation $rho$ of $G$ on $V$ is semisimple if and only if
+  every subrepresentation $W subset V$ there exists a complement $W' subset V$ such that
+  $
+    V = W plus.circle W'
+  $
+]
+
+#proof[
+  Look at lecture notes, not covered in class @Kowalski2011.
+]
+
+#proofidea[if $dim V < oo$][
+  #[
+    ($==>$):
+    Assume $V = plus.circle.big_(i in I) W_i$ with $V_i$ irreducible.
+    Let now $W subset V$ be a subrepresentation.
+
+    *Warning*: in general we dont have $W = plus.circle.big_(i in J) W_i$ for some $J subset I$.
+
+    #example[
+      trivial group $G = {e}$, $V = k^2$ then the semisimple decomposition
+      is $V = k e_1 plus.circle k e_2$ but any one-dim subspace $W$ is a subrepresentation.
+    ]
+
+    For each $i in I$ we have $W inter W_i subset W_i$ is a subrepresentation, so either
+    ${0}$ or $W_i$ by irreducibility. Moreover unless $W=V$ it cant be $W_i$ for all $i$.
+
+    So we have $i in I$ such that $W inter W_i = {0}$. Then $W plus.circle W_i subset V$ is a direct sum.
+    We do induction and we can find $J subset I$ such that
+    $
+      plus.circle.big_(j in J) W_j
+    $
+    complements $W$.
+  ]
+
+  #[
+    ($<==$): find $W_i subset V$ irred. find complements, decompose and repeat inductively.
+
+    In infinite dimension we use Zorn's lemma to do this induction (like in the other direction). However it is not trivial to find
+    non-trivial irreducible subrepresentations in infinite dimensions.
+
+    In general, there are repr. without any irreducible subrepresentations (see exercise sheet 2).
+  ]
+]
+
+#corollary[
+  $G, k$ fixed.
+  if $rho$ is semsimple, then any subrepr is semisimple, any quotient is semisimple. Any sum (not necessarily direct) of semisimple
+  repr. is semisimple.
+]
+
+#proof[
+  Let $W subset V$ be a subrep. We use the criterion of the lemma.
+  Let $W_1 subset W$ be a subrep, but then its also a subrep of $V$ so by the lemma there eixsts a complement $W_1' subset V$ in $V$.
+  Then $W_2 = W_1' inter W$ is a complement of $W_1$ in $W$.
+
+  simlarly for quotients and sums @Kowalski2011.
+]
+
+#proposition[
+  $G,k$ fixed. Let $rho = plus.circle.big_(i in I) rho_i$ be semismple with $rho_i$ pairwise non-isom and irred.
+
+  Then any subrepresentation of $rho$ is the representation on
+  $
+    plus.circle.big_(i in J) V_i
+  $
+  for some $J subset I$.
+]
+
+#remark[
+  The assumption, pairwise non-isom and irred is sometimes called *multiplicity free*.
+]
+
+#proof[
+  Let $W' subset V$ be a subrep. By corollary we have that $W'$ is semisimple so
+  its a direct sum of irreducible subrepresentations.
+
+  So it is enough to prove that if $W$ is irreducible then $W = V_i$ for some $i in I$.
+
+  Denote by $pi$ the representation on $W$. Let
+  $
+    p_i: rho -> rho_i
+  $
+  be the projection $V -> V_i$ given by the direct sum decomposition.
+
+  We can check that since $V_i$ is a subrep. of $V$, $p_i in "Hom"_G (rho, rho_i)$.
+  For $i in I$ we have $p_i|_W in "Hom"_G (pi, rho_i)$ so by Schur's lemma either $p_i|_W = 0$ or $p_i|_W$ is an isomorphism
+  (since $rho_i$ is also irreducible).
+
+  If $p_i|_W = 0$ for all $i$ then $W = {0}$. So some $p_i|_W$ is an isomorphism, so $W isom V_i$. This $i$ must be unique
+  by multiplicity free assumption.
+  So for $j != i$ $p_j|_W = 0$. This means
+  $
+    W subset V_i
+  $
+  so $W = V_i$ by irreducibility.
+]
+
+#example[Application][
+  What integral linear relations may exist between complex roots of $f in ZZ[X]$ for $f != 0$?
+
+  There is no restriction unless we assume someting about $f$, say $f$ is irreducible over $QQ$.
+
+  We know that one relation occurs somewhat freqeuntly, namely:
+
+  $
+    alpha_1 + ... + alpha_d = 0
+  $
+  where $alpha_i$ are the distinct roots of $f$ and $d = deg(f)$.
+  (if and only if the coefficient of $X^(d-1)$ is $0$).
+]
+
+#proposition[Girstmair, 1999][
+  Assume that the Galois group $G$ of the splitting field $K = QQ(alpha_1, ..., alpha_d)$ of $f$ in $CC$ is $S_d$
+  (acitng by permuting the roots).
+
+  The only possible non-trivial integral linear relation between the roots of $f$ is that
+  $
+    alpha_1 + ... + alpha_d = 0.
+  $
+]
+
+#proof[
+  Let
+  $
+    R_f = {(n_1, ..., n_d) in QQ^d | n_1 alpha_1 + ... + n_d alpha_d = 0}
+  $
+  be the space of linear relations between the roots.
+  This is a vector subspace of $QQ^d$.
+
+  *Fact*:
+  $R_f subset QQ^d$ is a subrepresentation of the representation of $G$ on $QQ^d$ by permuting the indices.
+
+  I.e. for $sigma in G$ we have
+  $
+    sigma dot (n_i)_i = (n_(tilde(sigma)^(-1)(i)))_i
+  $
+  where $sigma(alpha_i) = alpha_(tilde(sigma)(i))$. Its a simple computation to check this.
+
+  Moreover this repr. on $QQ^d$ is the same as permuting the canonical basis of $QQ^d$ that is
+  $
+    sigma dot e_i = e_(tilde(sigma)(i)).
+  $
+  (notice how here we dont have the inverse but it can be check that its infact the same.)
+
+  Assume now that $G = S_d$ then we have already seen this representation as an example, moreover its semisimple
+  and we have
+  $
+    QQ^d = QQ 1 plus.circle {(n_i) in QQ^d | sum n_i = 0}
+  $
+  and claimed that $W_d = {(n_i) in QQ^d | sum n_i = 0}$ is irreducible (if $d >= 2$).
+
+  For $d >= 2$ these two are not isomorphic. Thus $QQ^d$ has a multiplicity free decomposition.
+  For $d >= 3$ this is trivially true by dimensionality. For $d=2$ we can check directly that $W_2$
+  is given by
+  $
+    W_2 = {(a, -a) | a in QQ}
+  $
+  which is not the trivial representation.
+
+  The repr. on $QQ^d$ is multiplicity free.
+  By the last proposition we have the following properties.
+
+  We have few cases:
+
+  1. $R_f = {0}$ no relations.
+
+  2. $R_f = QQ 1$ which happens iff $alpha_1 = ... = alpha_d = 0$.
+
+  3. $R_f supset W_d$ but then for $i != j$ we have $alpha_i - alpha_j = 0$ thus all roots are equal which
+    cant be the case if $f$ is irreducible and $d >= 2$.
+
+  Thus the only possible non-trivial relation is $R_f = QQ 1$ which concludes the proof.
+]
+
+== Multilinear Operations
+
+#remark[Recall][
+  Given a vector space $V$ and $W$ over $k$ then the tensorproduct
+  $
+    V times.circle_k W
+  $
+  of $V$ and $W$ is a vector space with a $k$-blinear map
+  $
+    b: V times W -> V times.circle_k W
+  $
+  such that for $k$ vector space $E$ and any $k$-bilinear map
+  $
+    beta: V times W -> E
+  $
+  there exists a unique linear map $u: V times.circle_k W -> E$ such that
+  $
+    beta = u dot b.
+  $
+  Moreover such a vector space exists and is unique up to unique isomorphism.
+]
+
+Given
+$
+  u_1: V_1 -> V_2 \
+  u_2: W_1 -> W_2
+$
+there is a unique linear map
+$
+  u_1 times.circle u_2: V_1 times.circle W_1 -> V_2 times.circle W_2
+$
+such that
+$
+  (u_1 times.circle u_2) (v times.circle w) = u_1(v) times.circle u_2(w).
+$
+
+#definition[
+  If $V$ and $W$ are given repr. $rho, tau$ of a group $G$ then defining
+  $
+    g |-> rho(g) times.circle tau(g)
+  $
+  gives a representation on $V times.circle W$ called the tensor product
+  representation and denoted by
+  $
+    rho times.circle tau.
+  $
+]
+
+#remark[
+  We will see: if $G$ is finite and $k = CC$ and we start with
+  $
+    rho: G -> "GL"(V)
+  $
+  is faithful then decomposing
+  $
+    rho, rho times.circle rho, rho times.circle rho times.circle rho, ...
+  $ you get
+  all irreducible representations of $G$.
+]
+
+#remark[
+  This extends to all other multilinear operations like symmetric and alternating.
 ]
 
 
