@@ -741,9 +741,281 @@ $
 ]
 
 #remark[
-  This extends to all other multilinear operations like symmetric and alternating.
+  This extends to all other multilinear operations like symmetric and
+  alternating.
 ]
 
+#remark[
+  it turns out that "in some sense" representations of $G$ on $CC$-v.s. allows
+  you to recover $G$ up to isomorphism provided one also has
+  extra data, the most important of which is the tensor operation.
 
+  This is known as Tannaka-Krein duality.
+]
+
+#example[
+  1. #[
+      One uses tensor products to construct "new" representations e.g.
+      $
+        G = S_n, n >= 1
+      $
+      $rho_n$ the rep. on $V = CC^n$ given by permuting the coordinates.
+      Then we have
+      $
+        rho = 1_(S_n) plus.circle tau_n
+      $
+      if we took direct sums we would not get anything new. However if we
+      take tensor product we get e.g.:
+      $
+        rho times.circle rho =
+        underbrace(1_(S_n) times.circle 1_(S_n), 1_(S_n))
+        plus.circle underbrace(1_(S_n) times.circle tau_n, tau_n)
+        plus.circle underbrace(tau_n times.circle 1_(S_n), tau_n)
+        plus.circle (tau_n times.circle tau_n).
+      $
+      and we get
+      $
+        tau_n times.circle tau_n = "Sym"^2 tau_n plus.circle Lambda^2 tau_n
+      $
+      one can show that
+      $
+        Lambda^2 tau_n
+      $
+      is irreducible of dimension $((n-1)(n-2))/2$ so is different
+      from $1_(S_n)$ and $tau_n$ if $n >= 4$.
+      In general $"Sym"^m tau_n$ is not irreducible in general.
+    ]
+  2. #[
+      $G = "SL"_2(CC)$ with $d >= 0$. $rho_d$ on
+      $
+        V_d = {f in CC[X, Y] : "hom. of " deg d}
+      $
+      by restricting the left-regular representation.
+      One can show that
+      $
+        rho_d isom "Sym"^d rho_1
+      $
+      and $rho_1$ is given by the tautological representation
+      $"SL"_2(CC) arrow.hook "GL"_2(CC)$.
+    ]
+]
+
+#definition[
+  Given $G, k, rho$. The contragradient (dual) of $rho$ is the representation
+  $
+    rho^vee: G -> "GL"(V^*)
+  $
+  by $(rho^vee (g) lambda)(v) = lambda(rho(g^(-1)) v)$ for $lambda in V'$ and
+  $v in V$.
+]
+
+#remark[
+  $rho$ is said to be self-dual if there is an isomorphism
+  $
+    rho --> rho^vee.
+  $
+]
+
+== Changing $G$
+
+"Changing" $G$ means relating repr. of $G$, $G$ given a morphism
+$
+  H --> G.
+$
+
+*Two Operations*
+
+1. #[
+    *restriction* to a subgroup $H subset G$.
+    This is often used to study rep. of $G$ by exploiting what
+    we know about repr. of $H$.
+  ]
+
+2. #[
+    *induction* from a subgroup $H subset G$ to define/study
+    repr. of $G$ using those of $H$.
+  ]
+
+#proposition[
+  Let $H lt.tri G$ be a normal subgroup of $G$, $K = G slash H$. Then
+  $
+    {K -> "GL"(V)} &-> {"repr. " tilde(rho) " of " G " s.t. "
+      H subset ker(tilde(rho))} \
+    (rho: K -> "GL"(V)) &|-> (tilde(rho) := rho compose pi)
+  $
+  where $pi: G -> K$ is the quotient map.
+]
+
+#proofidea[
+  The proof of this relies on the universal property of quotients and
+  uses the representations are just group homomorphisms.
+]
+
+=== Restriction
+
+#definition[
+  $G, k, H < G$ fixed. Given $rho: G -> "GL"(V)$ we write
+  $"Res"_H^G (rho)$ for $rho|_H$.
+]
+
+#remark[
+  Note obvious compatibilities like
+  - direct sums commute with restriction
+  - tensor products commute with restriction
+  - duals commute with restriction
+
+  It is however not true in general that restrictions preserve properties such
+  as irreducibility or semisimplicity (e.g. restriction to the trivial group).
+
+  On the otherhand if a restriction is irreducible then the
+  original representation is irreducible.
+]
+
+#example[
+  $G = "SL"_2(CC), k = CC$.
+
+  #proposition[2.7.12 @Kowalski2011][
+    For $d >= 0$, $rho_d$ is irreducible.
+  ]
+
+  #proofidea[
+    Restrict to
+    $
+      A = {a_t = mat(t, ; , t^(-1)) | t in CC^times} isom CC^times
+    $
+
+    *Claim*:
+    $
+      "Res"_A^("SL"_2(CC)) (rho_d) isom
+      plus.circle.big_(i=0)^d CC X^i Y^(d-i)
+    $
+    where $CC X^i Y^(d-i)$ is an $A$-sub given by
+    $
+      a_t |-> t^(2i - d)
+    $
+
+    Indeed by def.
+    $
+      rho_d (a_t) (alpha X^i Y^(d-i)) =
+      alpha (t X)^i (t^(-1) Y)^(d-i) = alpha t^(2i - d) X^i Y^(d-i).
+    $
+    Thus the restriction is multiplicity free. Indeed note that the characters
+    $
+      a_t |-> t^(2i - d)
+    $
+    for $i = 0, ..., d$ are pairwise different on $CC^times$, hence
+    they are pairwise non-isomorphic as repr. of $A$.
+
+    Let $W subset V_d$ be an $"SL"_2(CC)$-subrep. $W$ is also a subrep.
+    of $"Res"_A^("SL"_2(CC)) (rho_d)$ so by one of the previous propositions
+    $
+      W = plus.circle.big_(i in I) CC X^i Y^(d-i)
+    $
+    for some $I subset {0, ..., d}$. Assume $I != emptyset$, and let
+    $i_0 in I$. So let
+    $
+      e_0 = X^(i_0) Y^(d-i_0) in W.
+    $
+    Now we use
+    $
+      u^+ = mat(1, 1; , 1) in "SL"_2(CC).
+    $
+    Then
+    $
+      rho_d(u^+) e_0 = X^(i_0) (X + Y)^(d-i_0) = \
+      X^d + (d-i_0) X^(d-1) Y + ... + X^(i_0) Y^(d-i_0) \
+      in W = plus.circle.big_(i in I) CC X^i Y^(d-i).
+    $
+    but then $X^i Y^(d-i) in W$ for all $i >= i_0$ by linear independence.
+    So if $i >= i_0$ then $i in I$. The same argument applied to
+    $
+      u^- = mat(1, ; 1, 1)
+    $
+    we get $I = {0, ..., d}$. Thus $W = V_d$ and $rho_d$ is irreducible.
+  ]
+]
+
+#remark[Rewords][
+  - $A$: cartan subgroup
+  - $u^+, u^-$: unipotent elements
+  - decomp. of restriction: weight space decomposition
+]
+
+=== Induction
+
+Given $H < G$ induction constructs a repr. of $G$ out of a repr. of $H$;
+this is related to restriction.
+
+*Abstractly*, one defines a representation
+$
+  "Ind"_H^G rho
+$
+for $rho: H -> "GL"(V)$ such that frobenius reciprocity holds:
+
+For $rho_1$ repr. of $G$ and $rho_2$ repr. of $H$ there is a $k$-linear
+isomorphism
+$
+  "Hom"_G (rho_1, "Ind"_H^G rho_2) isom "Hom"_H ("Res"_H^G rho_1, rho_2).
+$
+We will make this more concrete.
+
+#definition[
+  $k, H<G$ fixed. Let $rho: H -> "GL"(V)$. Let
+  $
+    W = {f: G -> V: f(h g) = rho(h) f(g) " " forall h in H, g in G}
+  $
+  and let $G$ act on $W$ by right translation:
+  $
+    (g dot f)(x) = f(x g) in W.
+  $
+  for $f in W, g in G, x in G$. Then the resulting repr. of $G$ is denoted
+  $
+    "Ind"_H^G rho
+  $
+  and is called the representation of $G$ induced by $rho$.
+]
+
+#example[
+  H = ${e_G}$ and $rho = 1$ then $W = {f: G -> k}$
+  and
+  $
+    rho_G = "Ind"_H^G 1
+  $
+  is the right-regular representation.
+]
+
+#proposition[Frobenius Reciprocity][
+  $k, H < G$ fixed. For any repr. $rho_1$ of $G$ on $V_1$ and
+  $rho_2$ of $H$ on $V_2$ there are explicit isomorphisms
+  $
+    "Hom"_G (rho_1, "Ind"_H^G rho_2) isom "Hom"_H ("Res"_H^G rho_1, rho_2)
+  $
+]
+
+#proof[
+  These are defined "in the obvious way".
+  $
+    & rho_1: V_1 quad "Ind" &&rho_2: W_2 \
+    "Res" & rho_1: V_1 quad &&rho_2: V_2 \
+  $
+  Consider
+  $
+    &&V_1 -->^u &W_2 = {f: G -> V_2 :...} \
+    ==>&&V_1 -->^tilde(u) &V_2 \
+  $
+  So we define in one direction
+  $
+    tilde(u)(v) = u(v)(e_G)
+  $
+  Conversely
+  $
+    &&V_1 -->^w &V_2 \
+    ==>&&V_1 -->^tilde(w) &W_2 = {f: G -> V_2 :...} \
+  $
+  we define
+  $
+    tilde(w)(v)(g) = w(rho_1(g) v).
+  $
+]
 
 #bibliography("bib.bib", full: true)
