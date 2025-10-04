@@ -964,6 +964,7 @@ We will make this more concrete.
   $
     W = {f: G -> V: f(h g) = rho(h) f(g) " " forall h in H, g in G}
   $
+  (the space of $rho$ equivariant functions.
   and let $G$ act on $W$ by right translation:
   $
     (g dot f)(x) = f(x g) in W.
@@ -985,37 +986,246 @@ We will make this more concrete.
 ]
 
 #proposition[Frobenius Reciprocity][
-  $k, H < G$ fixed. For any repr. $rho_1$ of $G$ on $V_1$ and
-  $rho_2$ of $H$ on $V_2$ there are explicit isomorphisms
+  $k, H < G$ fixed. For any repr.
   $
-    "Hom"_G (rho_1, "Ind"_H^G rho_2) isom "Hom"_H ("Res"_H^G rho_1, rho_2)
+    rho_1: G -> "GL"(V_1),\
+    rho_2: H -> "GL"(V_2),
+  $
+  there are natural isomorphisms ($k$-vector spaces)
+  $
+    "Hom"_G (rho_1, "Ind"_H^G rho_2) isom "Hom"_H ("Res"_H^G rho_1, rho_2).
   $
 ]
 
+#remark[
+  For finite dimensions and (or?) finite groups the ordering above does not
+  matter. However in generality this matters.
+]
+
 #proof[
-  These are defined "in the obvious way".
+  Given $H < G$ let
   $
-    & rho_1: V_1 quad "Ind" &&rho_2: W_2 \
-    "Res" & rho_1: V_1 quad &&rho_2: V_2 \
+    rho_1: G &-> "GL"(V_1),\
+    rho_2: H &-> "GL"(V_2),\
+    "Res"_H^G rho_1: H &-> "GL"(V_1),\
+    "Ind"_H^G rho_2: G &-> "GL"(W_2)
   $
-  Consider
+  Be as in the theorem. We will start by constructing the isomorphims in the
+  obvious way. That is
+
+  #set enum(numbering: "i")
+  1. #[
+      Given $V_1 -->^u &W_2 = {f: G -> V_2 :f " " rho_2"-equivariant"}$ we define
+      $
+        tilde(u): V_1 -> V_2
+      $
+      by $tilde(u)(v) = u(v)(e_G)$.
+    ]
+
+  2. #[
+      Given $V_1 ->^u V_2$ we define
+      $
+        hat(u): V_1 -> W_2 = {f: G -> V_2 : f " " rho_2"-equivariant"}
+      $
+      by $hat(u)(v)(g) = u(rho_1(g) v)$.
+    ]
+  *Clear*:
   $
-    &&V_1 -->^u &W_2 = {f: G -> V_2 :...} \
-    ==>&&V_1 -->^tilde(u) &V_2 \
+    u -> tilde(u),\
+    u -> hat(u)
   $
-  So we define in one direction
+  are $k$-linear maps.
+
+  *We need to check*:
+
+  1. #[
+      $u -> tilde(u)$ sends $G$-maps to $H$-maps,
+      $u -> hat(u)$ sends $H$-maps to $G$-maps,
+      and the image of $hat(u)$ is $W_2$.
+    ]
+
+  2. $hat(u) isom u$
+
+  3. $tilde(u) isom u$
+
+  See @Kowalski2011[Prop.~2.3.9] for more details.
+
+  1. #[
+      We check that $hat(u)(v) in W_2$. Let $h in H$ consider
+      $
+        hat(u)(v) (h x) = u(rho_1(h x) v) = u(rho_1(h) rho_1(x) v)
+        = rho_2(h) u(rho_1(x) v) = rho_2(h) hat(u)(v)(x).
+      $
+      thus $hat(u)(v) in W_2$. The remainder of this part can be done
+      as an exercise.
+    ]
+
+  2. #[
+      For this we compute
+      $
+        hat(tilde(u))
+      $
+      take $v in V_1$ then
+      $
+        tilde(u)(v) = u(v)(e_G)
+      $
+      then
+      $
+        hat(tilde(u))(v)(x) = tilde(u)(rho_1(x) v)
+        = u(rho_1(x) v)(e_G)
+        = ("Ind" rho_2)(x) u(v) (e_G) \
+        = u(v)(e_G x) = u(v)(x)
+      $
+      thus
+      $
+        hat(tilde(u)) = u
+      $
+      for all $v$.
+    ]
+]
+
+#example[
+  $k$ a field, $G$ a group we saw that
   $
-    tilde(u)(v) = u(v)(e_G)
+    rho_G = "Ind"_({e_G})^G (1).
   $
-  Conversely
+  Let $pi$ be any representation of $G$ on $V$ then Frobenius reciprocity
+  gives reciprocal isomorphisms
   $
-    &&V_1 -->^w &V_2 \
-    ==>&&V_1 -->^tilde(w) &W_2 = {f: G -> V_2 :...} \
+    "Hom"_G (pi, rho_G) <-->^tilde "Hom"_({e_G}) (V, k) = "Hom"_k (V, k) = V'.
   $
-  we define
+  What are the $pi -> rho_G$? Let $lambda in V'$ Then the construction above
+  associates to $lambda$ the $G$-morphism
   $
-    tilde(w)(v)(g) = w(rho_1(g) v).
+    u_lambda: pi -> rho_G
+  $
+  defined by
+  $
+    u_lambda (v) (g) = lambda(pi(g) v).
   $
 ]
+
+#definition[
+  Given $k, G, rho$ A *matrix coefficient* of $rho$ is a function
+  $f: G -> k$ of the form
+  $
+    f(x) = lambda(rho(x) v)
+  $
+  for some $lambda in V'$ and $v in V$.
+]
+
+#remark[
+  $V$ finite dimensional let $e_i$ be a basis of $V$ and $lambda_i$ the
+  associated dual basis. Then the matrix coefficients
+  $
+    lambda_i (rho(x) e_j)
+  $
+  is the coefficient in the $i$-th row and $j$-th column of the matrix
+  representing $rho(x)$ in the basis $e_i$.
+
+  $
+    rho(x) = mat(lambda_i (rho(x) e_j))_(i, j).
+  $
+]
+
+#remark[
+  Many (if not most) special functions of classical analysis
+  are matrix coefficients of suitable representation of certain groups.
+]
+
+#example[
+  $k = RR, G = RR$
+  and
+  $
+    R &-> "GL"_2 (RR), \
+    t &-> mat(cos t, -sin t; sin t, cos t)
+  $
+  is a repr of $RR$, and the matrix coefficients we get from
+  the standard basis are $sin$ and $cos$. From this fact we also
+  get all the addition formulas for $sin$ and $cos$.
+]
+
+== Further Properties of $"Res"$ and $"Ind"$
+
+1. *Functoriality*
+  #[
+    Given $H subset G$ and $rho_i: G -> "GL"(V_i)$
+    and $rho_1 -->^u rho_2$ a $G$-morphism. We get
+    $
+      "Res" rho_1 -->^u "Res" rho_2
+    $
+    Similarly for $pi_i: H -> "GL" (V_i)$
+    and $pi_1 ->^u pi_2$ an $H$-moprhism there is a $G$-morphism
+    $
+      "Ind"(u): "Ind" pi_1 -> "Ind" pi_2.
+    $
+    given by
+    $
+      "Ind"(u)(f)(g) = u(f(g)).
+    $
+    moreover we also have
+    $
+      "Ind"(u compose v) = "Ind"(u) compose "Ind"(v),
+      "Ind"(id_pi) = id_("Ind"(pi)).
+    $
+    (the same clearly also holds for $"Res"$).
+  ]
+
+2. *Dimension*
+  #[
+    $
+      dim "Res"_H^G (rho) = dim rho
+    $
+    and if $G$ is finite
+    $
+      dim "Ind"_H^G (pi) = [G:H] dim pi
+    $
+    otherwise both are infinite (not necessarily the same cardinality).
+  ]
+
+3. *Projection Formula* @Kowalski2011[2.3.18]:
+  #[
+    Given
+    $
+      rho_1: G -> "GL" (V_1)\
+      rho_2: H -> "GL" (V_2)
+    $
+    there are "natural" isomorphisms
+    $
+      "Ind"_H^G (rho_2) times.circle rho_1 -->^u
+      "Ind"_H^G (rho_2 times.circle "Res"_H^G rho_1)
+    $
+    *Interpretation*:
+    The class of representations of $G$ optained by inducing representations
+    of $H$ are stable under $plus.circle$ and $times.circle$
+    (indeed direct sum commutes with induction (exercise))
+    In that sense this class is an ideal (stable under external
+    multiplication).
+
+    To get this define $u$ by
+    $
+      u(f times.circle v)(x) = f(x) times.circle rho_1(x) v
+    $
+  ]
+
+4. *Transitivity* @Kowalski2011[2.3.20]
+  #[
+    Given $H_2 subset H_1 subset G$ then you have natural isomorphisms
+    $
+      "Res"_(H_2)^G rho = "Res"_(H_2)^(H_1) ("Res"_(H_1)^G rho)
+    $
+    and
+    $
+      "Ind"_(H_2)^G (rho) isom "Ind"_(H_2)^(H_1) ("Ind"_(H_1)^G rho)
+    $
+  ]
+
+#remark[
+  One can recover / prove abstractly some of these facts using only
+  Frobenius Reciprocity as a characterization of the induced representation.
+
+  See recording of 02.10.2025 for more details
+]
+
 
 #bibliography("bib.bib", full: true)
