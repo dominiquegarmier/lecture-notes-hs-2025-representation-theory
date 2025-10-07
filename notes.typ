@@ -1227,5 +1227,287 @@ We will make this more concrete.
   See recording of 02.10.2025 for more details
 ]
 
+= Some Basic Theorems
+
+Overall point of view: How to decompose and analyze a representation
+in terms of irreducible ones.
+
+Some sample results:
+
+#theorem[Burnside][
+  $G$ a group, $k$ algebraically closed. A finite dimensional representation
+  $rho$ of $G$ on $k$-vectorspace is irreducible
+  if and only if
+  $
+    rho(G) subset "End"_k (V)
+  $
+  generates $"End"_k (V)$ as a $k$-vector space.
+]
+
+#theorem[?][
+  $G$ group, $k$ alg. closed.
+
+  1. Two irreducible finite dim. repr $rho_1$ and $rho_2$ are isomorphic iff
+    $
+      "tr"(rho_1) = "tr"(rho_2)
+    $
+    as functions $G -> k$.
+  2. If $k$ also has char. $0$, then two semisimple repr. $rho_1, rho_2$ are
+    isomorphic iff
+    $
+      "tr"(rho_1) = "tr"(rho_2).
+    $
+  #remark[
+    These functions are called "characters" of the representation.
+  ]
+]
+
+== Jordan-Hoelder-Noether Theorem
+
+#definition[
+  $k, G, rho$ fixed. A *composition series* for $rho$ is
+  $
+    {0} = V_0 subset V_1 subset ... subset V_n = V
+  $
+  where $V_i$ are subrepresentation and $V_(i + 1) slash V_i$ are all
+  irreducible. Moreover these quotients are called the *composition factors*.
+]
+
+#remark[
+  1. #[
+      Not all $rho != 0$ have a composition series.
+
+      In particular since the existence of a composition
+      series implies the existence of an irreducible subrepresentation
+      (the first non-trivial $V_i$).
+    ]
+  2. Dimension argument / induction shows that if $dim V$ is finite then
+    $rho$ has some composition series.
+]
+
+#theorem[Jorder-Hoelder-Noether][
+  $G, k$
+  Let $rho$ have a finite composition series. Then the composition factors
+  and the number of indices $i$ such that $V_(i+1) slash V_i$ is isomorphic
+  to a given irred. representation do not depend on the choice of the
+  composition series.
+]
+
+#proof[
+  It sufficies to show that given two composition series
+  $
+    {0} = V_0 subset ... subset V_n = V,\
+    {0} = W_0 subset ... subset W_m = V
+  $
+  we have $n = m$ and there is a bijection
+  $sigma in S_n$ such that
+  $
+    W_(sigma(i)+1) slash W_(sigma(i)) isom V_(i+1) slash V_i
+  $
+  where the isomorphism is of representations.
+
+  Let $0 <= i <= n-1$ we construct a refinement
+  $
+    V_i = V_(i, 0) subset V_(i, 1) subset ... subset V_(i, m) = V_(i+1)
+  $
+  where $V_(i, j) = V_i + (W_j inter V_(i+1))$. Since $V_(i+1) / V_i$ is
+  irred. there exists no $V_i subset.neq tilde(V) subset.neq V_(i+1)$.
+  So there exists a unique $j$ such that
+  $
+    V_(i,0) = ... = V_(i,j) subset.neq V_(i,j+1) = ... = V_(i,m) = V_(i+1).
+  $
+  and then we have
+  $
+    V_(i,j+1) slash V_(i,j) = V_(i+1) slash V_i
+  $
+  but we have
+  $
+    V_(i,j+1) slash V_(i,j) = (V_i + (V_(i+1) inter W_(j+1))) / (V_i + (V_(i+1) inter W_j))
+    isom
+    (W_j + (W_(j+1) inter V_(i+1))) / (W_j + (W_(j+1) inter V_i))
+  $
+  where the isomorphism comes from a fact from linear algebra.
+  But now we can repeat the same construction by interchaning
+  $W, V$ and we get that this is isomorphic to
+  $
+    W_(j+1) slash W_j.
+  $
+  This consturction shows that $sigma$ given by $i mapsto j$ is injective.
+  Repeating the same argument with the roles of $V, W$ interchanged
+  we get that $sigma$ is bijective and $n = m$.
+  This concludes the proof.
+]
+
+#example[
+  1. #[
+      Warning! the list of composition factors and their multiplicity
+      does not charcterize $rho$ in general. E.g.
+      $
+        t mapsto mat(1, t; 0, 1),\
+        t mapsto mat(1, 0; 0, 1)
+      $
+      are not isomorphic but have the same composition factors.
+    ]
+  2. #[
+      Assume $rho$ semisimple, say
+      $
+        rho = plus.circle.big_(i in I) rho_i
+      $
+      ($I$ finite) for $rho_i$ irred. Then
+      This gives a composition series in the obvious way and
+      $
+        V_(i+1) slash V_i isom rho_(i+1)
+      $
+      But now due to the jordan-hoelder-noether theorem any composition series
+      will have the same factors (and multiplicities). So we get that
+      in the semisimple case the composition factors determine $rho$
+      up to isomorphism.
+    ]
+]
+
+== Isotypic Components
+
+*Recall*: $rho$ is isotypic if it is semisimple with all
+irreducible factors isomorphic.
+
+#proposition[@Kowalski2011[2.7.9.]][
+  $G,k$ arbitrary. $rho: G -> "GL"(V)$ semisimple
+
+  1. #[
+      For any irred. repr. $pi$ of $G$, the sum in $V$ of all subrep.
+      isomorphic to $pi$ is a $pi$-isotypic subrepresentation. We use
+      $M_rho (pi)$ to denote this sum.
+
+      Moreover in any decomposition of $V$ as a direct sum of stable subspaces $V_i$
+      with $V_i$ irred. We have
+      $
+        M_rho (pi) = plus.circle.big_(i in I, rho_i isom pi) V_i.
+      $
+    ]
+
+  2. #[
+      We have
+      $
+        V = plus.circle.big_(pi "up to iso") M_rho (pi)
+      $
+      which we call the isotypic components.
+    ]
+]
+
+#proof[
+  It suffices to prove $(1)$ since then the $M_rho (pi)$ are in direct sum.
+  I.e.
+  $
+    plus.circle.big_pi M_rho (pi) = plus.circle.big_pi plus.circle.big_(i in I, rho_i isom pi) V_i = V
+  $
+  Let $pi$ be irred. Let
+  $
+    M'_rho (pi) = plus.circle.big_(i in I, rho_i isom pi) V_i subset
+    M_rho (pi)
+  $
+  by definition. We will now show the other inclusion. Conversely,
+  let $j in I$ be s.t. $V_j$ is not isomorphic to $pi$ it suffices to prove
+  that the $j$-th component of any vector in $v in M_rho (pi)$ is zero. In
+  other words, that
+  $
+    p_j|_(M_rho (pi)) = 0
+  $
+  for this it is enough to show that if $W subset V$
+  is an irred subrep. iso. to $pi$ then
+  $
+    p_j|_W = 0
+  $
+  But $p_j|_W in "Hom"_G (W, V_j)$ but $W, V_j$ are not isomorphic as $G$
+  representations thus $p_j|_W$ is zero by Schur's lemma (if non-zero
+  then its injective, since $W$ is irred. but then its also surj. since its
+  non-zero, so its a $G$-isom, but thats not possible).
+]
+
+#remark[
+  If $rho_1, rho_2$ are semisimple, $pi$ irred. and
+  $
+    u: rho_1 -> rho_2
+  $
+  a $G$-morph then
+  $
+    u(M_(rho_1) (pi)) subset M_(rho_2) (pi).
+  $
+]
+
+#example[
+  1. #[
+      $rho$ semisimple.
+      $
+        chi: G -> k^*
+      $
+      is $1$-dim and thus irred. So we can consider
+      $
+        M_rho (chi) = {v in V: forall g in G, rho(g) v = chi(g) v}
+      $
+      which are called $chi$-equivariant vectors (or generalized eigenvectors).
+      Another example is
+      $
+        M_rho (1_G) = V^G = {v in V: forall g in G, rho(g) v = v}
+      $
+    ]
+
+  2. #[
+      $G = "SL"_2 (CC)$, $k = CC$ and $rho_n$ the representation
+      on polynomials $C[X,Y]$ homogeneous of degree $n$ by variable
+      change, is irreducible.
+
+      What about $rho_n times.circle rho_n$? By the proposition below
+      its semisimple.
+    ]
+]
+
+#proposition[Clebsch-Gordon Formula @Kowalski2011[2.6.3]][
+  $rho_n times.circle rho_n$ is semisimple and infact
+  it is isomorphic to
+  $
+    rho_(n + m) plus.circle rho_(n + m - 2) plus.circle ...
+    plus.circle rho_(m - n)
+  $
+  where $m >= n$. In particular its multiplicity free.
+
+  (we will see a proof of this later perhaps).
+]
+
+== Some Applications of Schur's Lemma
+
+Recall the following
+
+#proposition[
+  $k$ alg. closed, $G$ arbitrary
+
+  1. #[
+      $pi_1, pi_2$ irred.
+      $
+        dim "Hom"_G (pi_1, pi_2) =
+        cases(0 quad "if" pi_1 tilde.equiv.not pi_2 ,1 "else")
+      $
+    ]
+
+  2. #[
+      If $pi$ is a semisimple finite dim repr of $G$ and
+      $
+        dim_k "End"_G (pi) = 1
+      $
+      then $pi$ is irreducible.
+    ]
+]
+
+#example[
+  $k = RR$, $G = (RR, +)$ and $R$ acts on $RR^2$ by rotation. This $rho$
+  is irred. Consider now
+  $
+    "End"_G (rho) = {u : RR^2 -> RR^2|
+      u compose rho(t) = rho(t) compose u " " forall t in RR}
+    = {mat(alpha, -gamma; gamma, alpha) | alpha, gamma in RR}
+  $
+  so the dimension is atleast $2$ thus the assumption of the proposition
+  that $k$ is algebraically closed is necessary.
+]
+
 
 #bibliography("bib.bib", full: true)
